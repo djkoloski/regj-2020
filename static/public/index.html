@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CONSTRUCTION ZONE</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22256%22 height=%22256%22 viewBox=%220 0 100 100%22><text x=%2250%%22 y=%2250%%22 dominant-baseline=%22central%22 text-anchor=%22middle%22 font-size=%2278%22>🚧</text></svg>" />
+    <style>
+        @font-face {
+            font-family: 'Pixelmania';
+            src: url('Pixelmania.woff2') format('woff2'),
+                url('Pixelmania.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        body {
+            font-family: 'Pixelmania';
+            background: #010101;
+            background-image: url('background.png');
+            margin: 0;
+            color: #e4e4e4;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 2rem auto;
+        }
+        .game-wrapper {
+            padding: 20px;
+            background-image: url('border-stripes.png');
+            border: 4px solid #000;
+        }
+        #game {
+            width: 800px;
+            height: 600px;
+            background-color: #000;
+            border: 4px solid #000;
+        }
+        .instructions {
+            background: #000;
+            width: 800px;
+            padding: 28px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="game-wrapper">
+            <canvas id="game"></canvas>
+        </div>
+        <div class="instructions">
+            CONTROLS
+        </div>
+    </div>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.24.1/dist/phaser.min.js"></script>
+    <script src="/app.js"></script>
+</body>
+</html>

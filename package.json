@@ -1,0 +1,25 @@
+{
+  "name": "regj-2020",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-cli": "^2.3.0",
+    "webpack": "^4.44.2"
+  },
+  "scripts": {
+    "gulp": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/djkoloski/regj-2020.git"
+  },
+  "author": "",
+  "license": "Proprietary",
+  "bugs": {
+    "url": "https://github.com/djkoloski/regj-2020/issues"
+  },
+  "homepage": "https://github.com/djkoloski/regj-2020#readme"
+}
