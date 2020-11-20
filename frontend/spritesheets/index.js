@@ -1,5 +1,6 @@
 import PIXI from '../PIXI'
 
+import entities from './entities'
 import player from './player'
 
 export function SpritesheetLoader (res, next) {
@@ -16,5 +17,6 @@ export function SpritesheetLoader (res, next) {
 }
 
 export const spritesheets = [
-  { name: 'player', url: 'assets/player.png', metadata: { spritesheet: player }}
+  { name: 'player', url: 'assets/player.png', metadata: { spritesheet: player } },
+  { name: 'entities', url: 'assets/entities.png', metadata: { spritesheet: entities } },
 ]

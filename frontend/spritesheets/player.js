@@ -34,6 +34,8 @@ export default {
      up_5: { frame: { x:  80, y: 64, w: 16, h: 16 } },
      up_6: { frame: { x:  96, y: 64, w: 16, h: 16 } },
      up_7: { frame: { x: 112, y: 64, w: 16, h: 16 } },
+     building_0: { frame: { x:  0, y: 80, w: 16, h: 16 } },
+     building_1: { frame: { x: 16, y: 80, w: 16, h: 16 } },
   },
   animations: {
     idle: ['idle_0', 'idle_1'],
@@ -41,6 +43,7 @@ export default {
     right: ['right_0', 'right_1', 'right_2', 'right_3', 'right_4', 'right_5', 'right_6', 'right_7'],
     left: ['left_0', 'left_1', 'left_2', 'left_3', 'left_4', 'left_5', 'left_6', 'left_7'],
     up: ['up_0', 'up_1', 'up_2', 'up_3', 'up_4', 'up_5', 'up_6', 'up_7'],
+    building: ['building_0', 'building_1'],
   },
   meta: {
     scale: '1',

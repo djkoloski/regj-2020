@@ -1,7 +1,15 @@
 class Input {
   constructor (keys) {
+    this.keys = {}
     for (let name in keys) {
-      this[name] = new Key(keys[name])
+      this.keys[name] = new Key(keys[name])
+      this[name] = this.keys[name]
+    }
+  }
+
+  update () {
+    for (let name in this.keys) {
+      this.keys[name].update()
     }
   }
 }
@@ -10,6 +18,9 @@ class Key {
   constructor (values) {
     this._values = values
     this._pressed = 0
+
+    this._pressedThisFrame = false
+    this._releasedThisFrame = false
 
     this._downListener = this._onKeyDown.bind(this)
     this._upListener = this._onKeyUp.bind(this)
@@ -22,17 +33,25 @@ class Key {
     return this._pressed > 0
   }
 
+  pressed () {
+    return this._pressedThisFrame
+  }
+
   isUp () {
     return this._pressed == 0
+  }
+
+  released () {
+    return this._releasedThisFrame
   }
 
   _onKeyDown (e) {
     if (this._values.includes(e.key)) {
       if (!e.repeat) {
-        if (this._pressed == 0 && this.onPressed) {
-          this.onPressed()
-        }
         this._pressed += 1
+        if (this._pressed == 1) {
+          this._pressedThisFrame = true
+        }
       }
       e.preventDefault()
     }
@@ -41,13 +60,18 @@ class Key {
   _onKeyUp (e) {
     if (this._values.includes(e.key)) {
       if (!e.repeat) {
-        if (this._pressed == 1 && this.onReleased) {
-          this.onReleased()
-        }
         this._pressed -= 1
+        if (this._pressed == 0) {
+          this._releasedThisFrame = true
+        }
       }
       e.preventDefault()
     }
+  }
+
+  update () {
+    this._pressedThisFrame = false
+    this._releasedThisFrame = false
   }
 
   destroy () {
@@ -57,8 +81,18 @@ class Key {
 }
 
 export default new Input({
-  'right': ['ArrowRight', 'd'],
-  'up': ['ArrowUp', 'w'],
-  'left': ['ArrowLeft', 'a'],
-  'down': ['ArrowDown', 's'],
+  'moveRight': ['d'],
+  'moveUp': ['w'],
+  'moveLeft': ['a'],
+  'moveDown': ['s'],
+  'shootRight': ['ArrowRight'],
+  'shootUp': ['ArrowUp'],
+  'shootLeft': ['ArrowLeft'],
+  'shootDown': ['ArrowDown'],
+  'confirm': [' '],
+  'action1': ['z'],
+  'action2': ['x'],
+  'action3': ['c'],
+  // TODO remove
+  'cheat': ['p'],
 })
