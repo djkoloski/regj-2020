@@ -78,3 +78,43 @@ export class BouncingHazard extends Hazard {
     }
   }
 }
+
+export class RingHazard extends Hazard {
+  constructor (health, scale, cx, cy, angle, initial, outer, inner) {
+    let x = Math.cos(angle) * outer + cx
+    let y = Math.sin(angle) * outer + cy
+
+    super(x, y, health, scale)
+
+    this.cx = cx
+    this.cy = cy
+    this.fAngle = angle
+    this.initial = initial
+    this.outer = outer
+    this.inner = inner
+
+    this.time = 0
+  }
+
+  update (delta) {
+    super.update(delta)
+
+    this.time += delta
+
+    let radius = 0
+
+    const PERIOD = 100
+    let t = Math.sin(this.time / PERIOD * Math.PI / 2)
+    if (this.time < PERIOD) {
+      radius = (1 - t) * this.initial + t * this.inner
+    } else {
+      radius = (1 - t) * this.outer + t * this.inner
+    }
+
+    const ANGULAR_VELOCITY = 0.01
+    this.fAngle += ANGULAR_VELOCITY * delta
+
+    this.x = this.cx + radius * Math.cos(this.fAngle)
+    this.y = this.cy + radius * Math.sin(this.fAngle)
+  }
+}

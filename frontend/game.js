@@ -21,8 +21,8 @@ function overlaps(a, b) {
 }
 
 const BULLET_SPEED = 3
-// 1 interest for every 20 saved
-const INTEREST = 0.05
+// 1 interest for every 10 saved
+const INTEREST = 0.1
 const INSTRUCTIONS_SPEED = 0.025
 
 export const GAME_STATE = {
@@ -122,7 +122,7 @@ export default class Game extends PIXI.Container {
         }
 
         this.health.text = '♥ '.repeat(this.player.health)
-        this.levelName.text = 'LEVEL ONE'
+        this.levelName.text = LEVELS[this.levelIndex].name
         this.bank.text = `$ ${this.money}`
         this.instructions.visible = false
         break;
