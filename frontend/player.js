@@ -3,7 +3,7 @@ import { STAGE_SIZE } from './constants'
 import Input from './input'
 import SpritesheetSprite from './spritesheetSprite'
 import { GAME_STATE } from './game'
-import { BasicTower } from './tower'
+import { TOWERS } from './tower'
 
 const FOOSTEP_COOLDOWN = 14
 const IDLE_SPEED = 0.125
@@ -42,6 +42,7 @@ export default class Player extends PIXI.Container {
     this.shootCooldown = 0
     this.footstepCooldown = 0
     this.invincibilityCooldown = 0
+    this.buildingIndex = 0
   }
 
   input () {
@@ -103,7 +104,7 @@ export default class Player extends PIXI.Container {
         }
         break
       case PLAYER_STATE.BUILDING:
-        this.building.texture = resources.entities.spritesheet.textures[BasicTower.SPRITE]
+        this.building.texture = resources.entities.spritesheet.textures[TOWERS[this.buildingIndex].SPRITE]
         this.building.visible = true
 
         if (Input.action1.pressed()) {
@@ -111,16 +112,22 @@ export default class Player extends PIXI.Container {
           resources.closeMenu.sound.play()
         }
         if (Input.shootRight.pressed()) {
-          this.tryBuy(BasicTower, 0)
+          this.tryBuy(TOWERS[this.buildingIndex], 0)
         }
         if (Input.shootDown.pressed()) {
-          this.tryBuy(BasicTower, Math.PI / 2)
+          this.tryBuy(TOWERS[this.buildingIndex], Math.PI / 2)
         }
         if (Input.shootLeft.pressed()) {
-          this.tryBuy(BasicTower, Math.PI)
+          this.tryBuy(TOWERS[this.buildingIndex], Math.PI)
         }
         if (Input.shootUp.pressed()) {
-          this.tryBuy(BasicTower, Math.PI * 3 / 2)
+          this.tryBuy(TOWERS[this.buildingIndex], Math.PI * 3 / 2)
+        }
+        if (Input.moveRight.pressed()) {
+          this.buildingIndex = (this.buildingIndex + 1) % TOWERS.length
+        }
+        if (Input.moveLeft.pressed()) {
+          this.buildingIndex = (this.buildingIndex + TOWERS.length - 1) % TOWERS.length
         }
         break
     }
