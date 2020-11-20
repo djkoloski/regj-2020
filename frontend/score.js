@@ -13,7 +13,7 @@ const INSTRUCTIONS_DELAY = 3
 const INSTRUCTIONS_SPEED = 0.025
 
 export default class Score extends PIXI.Container {
-  constructor (score) {
+  constructor (score, won) {
     super()
 
     let record = Number(localStorage.getItem('record') || '0')
@@ -23,7 +23,8 @@ export default class Score extends PIXI.Container {
 
     this.time = 0
 
-    this.title = new PIXI.BitmapText('GAME OVER', { fontName: 'Lilian', fontSize: 24 })
+    let titleText = (won ? 'YOU WIN' : 'GAME OVER')
+    this.title = new PIXI.BitmapText(titleText, { fontName: 'Lilian', fontSize: 24 })
     this.title.x = (STAGE_SIZE.x - this.title.textWidth) / 2
     this.title.y = -(this.title.textHeight + TITLE_MARGIN)
     this.addChild(this.title)

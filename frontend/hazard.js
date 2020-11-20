@@ -3,14 +3,26 @@ import { STAGE_SIZE } from './constants'
 import Entity from './entity'
 
 export default class Hazard extends Entity {
-  constructor (x, y) {
+  constructor (x, y, health, scale) {
     super()
 
     this.x = x
     this.y = y
     this.value = 1
-    this.health = 1
-    this.size = { x: 8, y: 8 }
+    this.health = health
+    this.size = { x: 8 * scale, y: 8 * scale }
+
+    this.sprite = new PIXI.Sprite()
+    this.sprite.x = -this.size.x
+    this.sprite.y = -this.size.y
+    this.sprite.scale.x = scale
+    this.sprite.scale.y = scale
+    this.addChild(this.sprite)
+  }
+
+  update (delta) {
+    let index = Math.min(7, this.health - 1)
+    this.sprite.texture = resources.entities.spritesheet.textures[`hazard_${index}`]
   }
 
   takeDamage (amount) {
@@ -18,6 +30,8 @@ export default class Hazard extends Entity {
       this.health = Math.max(0, this.health - amount)
       if (this.health == 0) {
         this.kill()
+      } else {
+        resources.hit.sound.play()
       }
     }
   }
@@ -30,22 +44,24 @@ export default class Hazard extends Entity {
       height: this.size.y,
     }
   }
+
+  kill () {
+    super.kill()
+    resources.explode.sound.play()
+  }
 }
 
 export class BouncingHazard extends Hazard {
-  constructor (x, y, vx, vy) {
-    super(x, y)
+  constructor (x, y, health, scale, vx, vy) {
+    super(x, y, health, scale)
 
     this.vx = vx
     this.vy = vy
-
-    this.sprite = new PIXI.Sprite(resources.entities.spritesheet.textures.hazard_0)
-    this.addChild(this.sprite)
-    this.sprite.x = -this.size.x
-    this.sprite.y = -this.size.y
   }
 
   update (delta) {
+    super.update(delta)
+
     this.x += this.vx * delta
     this.y += this.vy * delta
 
@@ -60,11 +76,5 @@ export class BouncingHazard extends Hazard {
     if (reverseRight || reverseLeft) {
       this.vx = -this.vx
     }
-  }
-
-  kill () {
-    super.kill()
-
-    resources.explode.sound.play()
   }
 }

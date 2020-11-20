@@ -4,7 +4,7 @@ import Input from './input'
 import Player from './player'
 import Score from './score'
 import Bullet from './bullet'
-import { SpawnBouncingHazards, WaitHazardsClearWave } from './wave'
+import LEVELS from './levels'
 
 function overlaps(a, b) {
   let ax0 = a.x - a.width
@@ -21,21 +21,9 @@ function overlaps(a, b) {
 }
 
 const BULLET_SPEED = 3
-// 1 interest for every 25 saved
-const INTEREST = 0.04
+// 1 interest for every 20 saved
+const INTEREST = 0.05
 const INSTRUCTIONS_SPEED = 0.025
-
-const LEVELS = [
-  {
-    name: 'LEVEL ONE',
-    waves: [
-      game => new SpawnBouncingHazards(game, 5, 1.5),
-      game => new WaitHazardsClearWave(game),
-      game => new SpawnBouncingHazards(game, 5, 1.5),
-      game => new WaitHazardsClearWave(game)
-    ],
-  }
-]
 
 export const GAME_STATE = {
   ACTION: 0,
@@ -108,13 +96,19 @@ export default class Game extends PIXI.Container {
 
     // TODO remove
     if (Input.cheat.pressed()) {
-      this.addMoney(100)
-      this.intermission()
+      for (let hazard of this.hazards) {
+        hazard.kill()
+        this.money += hazard.value
+        this.earned += hazard.value
+      }
     }
 
     switch (this.state) {
       case GAME_STATE.ACTION:
         if (this.wave === null) {
+          if (this.levelIndex == LEVELS.length - 1) {
+            return new Score(this.earned, true)
+          }
           this.intermission()
           break
         }
@@ -124,7 +118,7 @@ export default class Game extends PIXI.Container {
         this.updateTowers(delta)
 
         if (this.player.health <= 0) {
-          return new Score(this.earned)
+          return new Score(this.earned, false)
         }
 
         this.health.text = '♥ '.repeat(this.player.health)
@@ -274,6 +268,9 @@ export default class Game extends PIXI.Container {
     this.player.health = 3
 
     this.state = GAME_STATE.INTERMISSION
+
+    // Next level
+    this.levelIndex = Math.min(LEVELS.length - 1, this.levelIndex + 1)
 
     // Happy noise
     resources.waveEnd.sound.play()

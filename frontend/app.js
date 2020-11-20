@@ -37,6 +37,7 @@ loader
     { name: 'waveStart', url: 'assets/wave_start.mp3' },
     { name: 'waveEnd', url: 'assets/wave_end.mp3' },
     { name: 'damage', url: 'assets/damage.mp3' },
+    { name: 'hit', url: 'assets/hit.mp3' },
     { name: 'explode', url: 'assets/explode.mp3' },
     { name: 'money', url: 'assets/money.mp3' },
     { name: 'interest', url: 'assets/interest.mp3' },

@@ -22,6 +22,14 @@ function direction(from, to) {
   }
 }
 
+function resolve(value) {
+  if (typeof value === 'function') {
+    return value()
+  } else {
+    return value
+  }
+}
+
 export default class Wave {
   constructor (game) {
     this.game = game
@@ -30,20 +38,13 @@ export default class Wave {
   update (delta) {}
 }
 
-export class SpawnBouncingHazards extends Wave {
-  constructor (game, amount, velocity) {
-    super(game)
-
-    for (let i = 0; i < amount; ++i) {
-      let pos = randomPoint(STAGE_OUTER_RADIUS + 20)
-      let target = randomPoint(STAGE_INNER_RADIUS - 20)
-      let dir = direction(pos, target)
-      game.addHazard(new BouncingHazard(pos.x, pos.y, dir.x * velocity, dir.y * velocity))
-    }
-  }
-
-  update (delta) {
-    this.game.advanceWave()
+export function spawnBouncingHazards(game, amount, health, scale, velocity) {
+  for (let i = 0; i < amount; ++i) {
+    let pos = randomPoint(STAGE_OUTER_RADIUS + 20)
+    let target = randomPoint(STAGE_INNER_RADIUS - 20)
+    let dir = direction(pos, target)
+    let vel = resolve(velocity)
+    game.addHazard(new BouncingHazard(pos.x, pos.y, resolve(health), resolve(scale), dir.x * vel, dir.y * vel))
   }
 }
 
@@ -51,7 +52,7 @@ export class WaitSecondsWave extends Wave {
   constructor (game, duration) {
     super(game)
 
-    this.duration = duration
+    this.duration = duration * 48
   }
 
   update (delta) {
