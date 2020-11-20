@@ -70,8 +70,12 @@ export default class Title extends PIXI.Container {
     this.buildSprite.visible = controlsVisible
     this.instructions.visible = (instructionsAnimTime > 0 && Math.floor(instructionsAnimTime) % 2 == 0)
 
-    if (Input.confirm.isDown()) {
-      return new Game()
+    if (Input.confirm.pressed()) {
+      if (!controlsVisible) {
+        this.time = INSTRUCTIONS_DELAY / INSTRUCTIONS_SPEED
+      } else {
+        return new Game()
+      }
     }
   }
 

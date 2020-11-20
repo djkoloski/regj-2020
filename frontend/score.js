@@ -3,6 +3,7 @@ import { STAGE_SIZE } from './constants'
 import Easings from './easings'
 import Input from './input'
 import Game from './game'
+import Title from './title'
 import SpritesheetSprite from './spritesheetSprite'
 
 const TITLE_MARGIN = 20
@@ -11,7 +12,7 @@ const TITLE_SPEED = 0.01
 const INSTRUCTIONS_DELAY = 3
 const INSTRUCTIONS_SPEED = 0.025
 
-export default class Title extends PIXI.Container {
+export default class Score extends PIXI.Container {
   constructor (score) {
     super()
 
@@ -73,8 +74,20 @@ export default class Title extends PIXI.Container {
     this.bestScore.visible = controlsVisible
     this.instructions.visible = (instructionsAnimTime > 0 && Math.floor(instructionsAnimTime) % 2 == 0)
 
-    if (Input.confirm.isDown()) {
-      return new Game()
+    if (Input.confirm.pressed()) {
+      if (!controlsVisible) {
+        this.time = INSTRUCTIONS_DELAY / INSTRUCTIONS_SPEED
+      } else {
+        return new Game()
+      }
+    }
+
+    if (Input.back.pressed()) {
+      if (!controlsVisible) {
+        this.time = INSTRUCTIONS_DELAY / INSTRUCTIONS_SPEED
+      } else {
+        return new Title()
+      }
     }
   }
 

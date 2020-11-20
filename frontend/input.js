@@ -95,4 +95,5 @@ export default new Input({
   'action3': ['c'],
   // TODO remove
   'cheat': ['p'],
+  'back': ['Escape'],
 })
