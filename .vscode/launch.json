@@ -22,7 +22,7 @@
             "program": "${workspaceFolder}/target/release/backend.exe",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/build/dev",
+            "cwd": "${workspaceFolder}/build/prod",
             "environment": [],
             "externalConsole": false
         }

@@ -49,7 +49,6 @@ function createWebpackCompiler (dir, mode) {
   if (mode === 'development') {
     config.devtool = 'inline-source-map'
   } else {
-    config.plugins.push(new OptimizeCssAssetsPlugin())
   }
   return webpack(config)
 }
@@ -115,4 +114,4 @@ gulp.task('create-build-directory-prod', (done) => {
 
 gulp.task('dev', gulp.series('create-build-directory-dev', gulp.parallel('generate-backend-keys-dev', 'webpack-dev', 'watch-static-dev')))
 
-gulp.task('prod', gulp.series('create-build-directory-prod', gulp.parallel('webpack-prod', 'copy-static-prod', 'build-backend-prod')))
+gulp.task('prod', gulp.series('create-build-directory-prod', gulp.parallel('webpack-prod', 'copy-static-prod')))
