@@ -94,15 +94,6 @@ export default class Game extends PIXI.Container {
 
     this.player.update(delta)
 
-    // TODO remove
-    if (Input.cheat.pressed()) {
-      for (let hazard of this.hazards) {
-        hazard.kill()
-        this.money += hazard.value
-        this.earned += hazard.value
-      }
-    }
-
     switch (this.state) {
       case GAME_STATE.ACTION:
         if (this.wave === null) {
