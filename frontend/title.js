@@ -46,6 +46,13 @@ export default class Title extends PIXI.Container {
     this.shootSprite.play('idle', 0.125)
     this.addChild(this.shootSprite)
 
+    this.bulletSprite = new SpritesheetSprite(resources.bulletTravel)
+    this.bulletSprite.x = 155
+    this.bulletSprite.y = 104
+    this.bulletSprite.visible = false
+    this.bulletSprite.play('travel', 0.75)
+    this.addChild(this.bulletSprite)
+
     this.buildSprite = new SpritesheetSprite(resources.player)
     this.buildSprite.x = 240
     this.buildSprite.y = 104
@@ -67,8 +74,12 @@ export default class Title extends PIXI.Container {
     this.controls.visible = controlsVisible
     this.moveSprite.visible = controlsVisible
     this.shootSprite.visible = controlsVisible
+    this.bulletSprite.visible = controlsVisible
     this.buildSprite.visible = controlsVisible
     this.instructions.visible = (instructionsAnimTime > 0 && Math.floor(instructionsAnimTime) % 2 == 0)
+
+    const moveAnimations = ['right', 'up', 'left', 'down']
+    this.moveSprite.play(moveAnimations[Math.floor(Math.max(0, instructionsAnimTime) / 2) % 4], 0.275)
 
     if (Input.confirm.pressed()) {
       if (!controlsVisible) {
