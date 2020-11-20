@@ -38,6 +38,11 @@ export default class Player extends PIXI.Container {
     this.building.visible = false
     this.addChild(this.building)
 
+    this.buildingCost = new PIXI.BitmapText('', { fontName: 'Lilian', fontSize: 12 } )
+    this.buildingCost.y = -42
+    this.buildingCost.visible = false
+    this.addChild(this.buildingCost)
+
     this.state = PLAYER_STATE.NORMAL
     this.shootCooldown = 0
     this.footstepCooldown = 0
@@ -71,6 +76,7 @@ export default class Player extends PIXI.Container {
     switch (this.state) {
       case PLAYER_STATE.NORMAL:
         this.building.visible = false
+        this.buildingCost.visible = false
 
         this.setDirection(this.input())
         this.x += this.direction.x * this.speed * delta
@@ -106,6 +112,9 @@ export default class Player extends PIXI.Container {
       case PLAYER_STATE.BUILDING:
         this.building.texture = resources.entities.spritesheet.textures[TOWERS[this.buildingIndex].SPRITE]
         this.building.visible = true
+        this.buildingCost.visible = true
+        this.buildingCost.text = `$${TOWERS[this.buildingIndex].COST}`
+        this.buildingCost.x = -this.buildingCost.textWidth / 2
 
         if (Input.action1.pressed()) {
           this.state = PLAYER_STATE.NORMAL
