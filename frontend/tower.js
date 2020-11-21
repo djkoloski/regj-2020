@@ -16,7 +16,7 @@ export default class Tower extends PIXI.Container {
 }
 
 const BASIC_TOWER_SHOOT_COOLDOWN = 400
-const ADVANCED_TOWER_SHOOT_COOLDOWN = 400
+const ADVANCED_TOWER_SHOOT_COOLDOWN = 300
 const ELITE_TOWER_SHOOT_COOLDOWN = 200
 
 export class BasicTower extends Tower {
@@ -147,6 +147,6 @@ export class EliteTower extends Tower {
   }
 }
 EliteTower.SPRITE = 'tower_2'
-EliteTower.COST = 50
+EliteTower.COST = 30
 
 export const TOWERS = [ BasicTower, AdvancedTower, EliteTower ]
