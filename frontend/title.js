@@ -60,6 +60,13 @@ export default class Title extends PIXI.Container {
     this.buildSprite.play('building', 0.125)
     this.addChild(this.buildSprite)
 
+    this.turretSprite = new SpritesheetSprite(resources.entities)
+    this.turretSprite.x = 240
+    this.turretSprite.y = 86
+    this.turretSprite.visible = false
+    this.turretSprite.play('all_towers', 0.01)
+    this.addChild(this.turretSprite)
+
     this.music = resources.titleMusic.sound.play()
   }
 
@@ -76,6 +83,7 @@ export default class Title extends PIXI.Container {
     this.shootSprite.visible = controlsVisible
     this.bulletSprite.visible = controlsVisible
     this.buildSprite.visible = controlsVisible
+    this.turretSprite.visible = controlsVisible
     this.instructions.visible = (instructionsAnimTime > 0 && Math.floor(instructionsAnimTime) % 2 == 0)
 
     const moveAnimations = ['right', 'up', 'left', 'down']

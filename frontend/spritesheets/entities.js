@@ -12,6 +12,9 @@ export default {
     tower_1:  { frame: { x:  16, y: 16, w: 16, h: 16 } },
     tower_2:  { frame: { x:  32, y: 16, w: 16, h: 16 } },
   },
+  animations: {
+    all_towers: ['tower_0', 'tower_1', 'tower_2'],
+  },
   meta: {
     scale: '1',
   }

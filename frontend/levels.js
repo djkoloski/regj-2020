@@ -81,12 +81,12 @@ export default [
     name: 'LEVEL SIX',
     waves: [
       game => {
-        spawnVerticalWall(game, 5, 3, 1, -10, 1, -0.25)
-        spawnVerticalWall(game, 5, 3, 1, STAGE_SIZE.x + 10, -1, 0.25)
+        spawnVerticalWall(game, 4, 2, 1, -10, 1, -0.25)
+        spawnVerticalWall(game, 4, 2, 1, STAGE_SIZE.x + 10, -1, 0.25)
         return new WaitSecondsWave(game, 6)
       },
       game => {
-        spawnBouncingHazards(game, 5, 1, 1, 1.5)
+        spawnBouncingHazards(game, 5, 3, 1, 1.5)
         return new WaitHazardsClearWave(game)
       },
     ]
